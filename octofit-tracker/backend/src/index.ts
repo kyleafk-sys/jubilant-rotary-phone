@@ -1,5 +1,5 @@
 import express from 'express'
-import { connectDB } from './database'
+import { connectDB } from './config/database'
 
 const app = express()
 const PORT = process.env.PORT ? Number(process.env.PORT) : 8000
