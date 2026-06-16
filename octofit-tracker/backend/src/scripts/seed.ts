@@ -3,18 +3,16 @@
  *
  * This script populates users, teams, activities, workouts, and leaderboard collections.
  */
-import mongoose from 'mongoose'
+import { connectDB, disconnectDB } from '../database'
 import User from '../models/User'
 import Team from '../models/Team'
 import Activity from '../models/Activity'
 import Workout from '../models/Workout'
 import Leaderboard from '../models/Leaderboard'
 
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/octofit_db'
-
 async function seed() {
   console.log('Seed the octofit_db database with test data')
-  await mongoose.connect(MONGO_URI)
+  await connectDB()
 
   // Clear existing data
   await Leaderboard.deleteMany({})
@@ -86,7 +84,7 @@ async function seed() {
     console.log('API verification skipped or failed (server may not be running):', String(err))
   }
 
-  await mongoose.disconnect()
+  await disconnectDB()
 }
 
 seed().catch(err => {

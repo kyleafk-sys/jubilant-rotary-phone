@@ -1,9 +1,8 @@
 import express from 'express'
-import mongoose from 'mongoose'
+import { connectDB } from './database'
 
 const app = express()
 const PORT = process.env.PORT ? Number(process.env.PORT) : 8000
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/octofit_db'
 
 // Codespaces-aware host selection and preview URL support
 const CODESPACE = process.env.CODESPACE_NAME
@@ -31,8 +30,7 @@ app.get('/', (req, res) => {
 
 async function start() {
   try {
-    await mongoose.connect(MONGO_URI)
-    console.log('Connected to MongoDB')
+    await connectDB()
     app.listen(PORT, HOST, () => {
       console.log(`Server listening on ${HOST}:${PORT}`)
       if (codespacesPreviewUrl) {
